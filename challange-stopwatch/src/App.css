@@ -1,0 +1,18 @@
+*{
+  font-family: segoe ui;
+}
+
+.App {
+  text-align: center;
+  font-size: 1.5em;
+  margin-top: 20%;
+}
+
+.App-title {
+  font-size: 2em;
+}
+
+.Clock-info{
+  display : inline;
+  margin : 10px;
+}
