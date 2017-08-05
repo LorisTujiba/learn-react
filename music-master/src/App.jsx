@@ -2,22 +2,25 @@ import React, {Component} from 'react';
 import './App.css';
 import {FormGroup, FormControl, InputGroup, Glyphicon} from 'react-bootstrap';
 import Profile from './Profile';
+import Gallery from './Gallery';
 
 class App extends Component{
   constructor(props){
     super(props);
     this.state = {
       query : '',
-      artist:null
+      artist:null,
+      tracks:[]
     }
   }
 
   search(){
     const BASE_URL = 'https://api.spotify.com/v1/search?';
-    const FETCH_URL = BASE_URL + 'q=' + this.state.query
+    let FETCH_URL = BASE_URL + 'q=' + this.state.query
                       + '&type=artist&limit=1';
+    const ALBUM_URL = 'https://api.spotify.com/v1/artists/';
 
-    var accessToken = 'BQAqiYbugsAR4KYmqO_zC7QD5iysZKXF52NB6Yo105dlqWh_W3aiXbVspIvKZxe5qblacI42pPs8OtRslmb6jtFr1ISldateOK6vKe9zVKK5nyFSnbDMOTvIAzYhhNV14SagaRyTxgLPdnGbh-g7Qt1uklhl6J3h9S4So0OZ-6mbBSpvjv4'
+    var accessToken = 'BQCsY4pg5a7T8yZOvAD7ANyoWZDGOqCmOrVp3ghsmL0PF3mVbJ3EcuIHf9mBKu7cuiMSq-hdSyrqKDTNQjXwVNMwEXarAMROUvYZNwwUS43lw0a2vRzuZ7fNuloVqyvxPaYFN5r6oeszThr_3DuNDirKgPkI2KgEWX1rxVsw0icYDu_pz2E'
     var myOpt = {
       method: 'GET',
       headers: {
@@ -33,6 +36,16 @@ class App extends Component{
       const artist = json.artists.items[0];
       console.log(artist)
       this.setState({artist});
+
+      FETCH_URL = `${ALBUM_URL}${artist.id}/top-tracks?country=US&`
+      fetch(FETCH_URL,myOpt)
+      .then(response => response.json())
+      .then(json => {
+        const { tracks } = json;
+        console.log(tracks)
+        this.setState({tracks});
+      })
+
     })
   }
 
@@ -62,14 +75,13 @@ class App extends Component{
         {
           this.state.artist !== null
           ?
-            <div><Profile artist={this.state.artist}/>
-            <div className="Gallery"></div></div>
+            <div>
+              <Profile artist={this.state.artist}/>
+              <Gallery tracks={this.state.tracks}/>
+            </div>
           :
-            ''
+            <div></div>
         }
-
-
-
       </div>
     )
   }
