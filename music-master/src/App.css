@@ -1,0 +1,44 @@
+body{
+  background: #212121;
+  color : #fff;
+}
+
+.App {
+  text-align: center;
+  padding : 5%;
+}
+
+.App-title{
+  font-size: 2em;
+}
+
+/*Profile*/
+.Profile {
+  display : flex;
+  justify-content: center;
+}
+
+.Profile-info{
+  margin-left: 10px;
+  text-align: left;
+}
+
+.Profile-img{
+  width : 200px;
+  height : 200px;
+  border : 2px solid #888;
+  border-radius : 200px;
+  object-fit: cover;
+}
+
+.Profile-name{
+  font-size: 1.5em;
+}
+
+.Profile-followers {
+  font-size: 1.2em;
+}
+
+.Profile-followers, .Profile-genres{
+  font-size: 1em;
+}
