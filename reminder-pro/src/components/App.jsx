@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { addReminder, deleteReminder } from '../actions';
+import { addReminder, deleteReminder, clearReminders } from '../actions';
 import '../App.css'
 import moment from 'moment';
 
@@ -78,6 +78,12 @@ class App extends Component{
           </button>
         </div>
         {this.renderReminders()}
+        <button
+          className="btn btn-danger"
+          onClick={() => this.props.hapussemua()}
+        >
+          Clear Reminder
+        </button>
       </div>
     )
   }
@@ -86,7 +92,8 @@ class App extends Component{
 function mapDispatchToProps(dispatch){
   return {
     kucing: (text,dueDate) => dispatch(addReminder(text,dueDate)),
-    kambing: (id) => dispatch(deleteReminder(id))
+    kambing: (id) => dispatch(deleteReminder(id)),
+    hapussemua: () => dispatch(clearReminders()),
   }
 }
 
