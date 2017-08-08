@@ -1,18 +1,37 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { goalRef } from '../firebase';
-import {setGoals} from  '../actions';
+import {completeGoalRef, goalRef} from '../firebase';
 
 class GoalItem extends Component{
+
+  completeGoal(){
+    const {email} = this.props.user;
+    const {title, serverKey} = this.props.goal;
+    goalRef.child(serverKey).remove();
+    completeGoalRef.push({email,title});
+  }
+
   render(){
     const{ email, title} = this.props.goal;
     return(
-      <div>
+      <div style={{margin: '5px'}}>
         <strong>{title}</strong>
-        <span>by <em>{email}</em></span>
+        <span style={{marginRight: '5px'}}> by <em>{email}</em></span>
+        <button className="btn btn-sm btn-primary"
+          onClick={()=>this.completeGoal()}
+        >
+          Complete
+        </button>
       </div>
     )
   }
 }
 
-export default GoalItem;
+function mapStateToProps(state){
+  const {user} = state;
+  return {
+    user
+  }
+}
+
+export default connect(mapStateToProps, null)(GoalItem);
